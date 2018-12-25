@@ -1,0 +1,13 @@
+<app-main-layout>
+  <div class="page-title">Trips</div>
+  <a routerLink="create" routerLinkActive="active">Create new trip</a>
+  <br />
+  <br />
+  <app-trip-list
+    [trips]="trips$ | async"
+    [pageInfo]="page$ | async"
+    [displayedColumns]="columns"
+    (clickRow)="selectTrip($event)"
+    (load)="onLoad($event)">
+  </app-trip-list>
+</app-main-layout>
