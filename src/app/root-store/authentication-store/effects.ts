@@ -132,7 +132,7 @@ export class AuthenticationStoreEffects {
   private formatCreateAccountError(error: any): string {
     if (error.error && error.error.errors && error.error.errors.length) {
       switch (error.error.errors[0].message) {
-        case 'email must be unique':
+        case 'email_UNIQUE must be unique':
           return 'An account for this email already exists.';
         default:
           return error.error.errors[0].message;

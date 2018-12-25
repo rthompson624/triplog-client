@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidationErrors } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
 import { takeUntil } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { RootStoreState, AuthenticationStoreActions, AuthenticationStoreSelectors } from '../../../root-store';
 
@@ -16,13 +15,10 @@ import { RootStoreState, AuthenticationStoreActions, AuthenticationStoreSelector
 })
 export class CreateAccountComponent implements OnInit, OnDestroy {
   accountForm: FormGroup;
-  isLoading$: Observable<boolean>;
-  error$: Observable<string>;
   private ngUnsubscribe = new Subject<boolean>();
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
     private store$: Store<RootStoreState.State>,
     private actions$: Actions
   ) {
@@ -31,8 +27,6 @@ export class CreateAccountComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.createaccountForm();
     this.registerListeners();
-    this.isLoading$ = this.store$.select(AuthenticationStoreSelectors.selectIsLoading);
-    this.error$ = this.store$.select(AuthenticationStoreSelectors.selectError);
   }
 
   ngOnDestroy() {

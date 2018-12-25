@@ -14,9 +14,16 @@
       <a *ngIf="user$ | async" (click)="onLogout()">Logout</a>
     </div>
   </div>
+  <mat-progress-bar *ngIf="isLoading$ | async" mode="indeterminate"></mat-progress-bar>
 </div>
 
 <!-- Content -->
 <div class="main">
   <ng-content></ng-content>
+  <div *ngIf="errorMessage$ | async" style="padding-top: 20px">
+    <mat-chip-list>
+      <mat-chip color="accent" selected>Error</mat-chip>
+    </mat-chip-list>
+    <div class="error-message">{{ errorMessage$ | async }}</div>  
+  </div>
 </div>

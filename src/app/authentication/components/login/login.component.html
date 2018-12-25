@@ -12,11 +12,7 @@
     <br />
     <div class="row">
       <button type="submit" [disabled]="!loginForm.valid" mat-raised-button color="primary">Submit</button>
-      <div class="spacer"></div>
-      <mat-spinner *ngIf="isLoading$ | async" [diameter]="40"></mat-spinner>
     </div>
-    <br />
-    <div *ngIf="error$ | async" class="error-message">{{ error$ | async }}</div>
   </form>
   <br />
   <div>

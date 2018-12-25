@@ -62,3 +62,8 @@ a:hover {
   color: white;
   text-decoration-line: none;
 }
+
+.error-message {
+  color:#ff4081;
+  padding-top: 10px;
+}

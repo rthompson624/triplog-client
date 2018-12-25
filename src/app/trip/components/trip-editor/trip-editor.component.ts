@@ -15,7 +15,6 @@ export class TripEditorComponent implements OnInit, OnChanges {
   @Output() tripSave = new EventEmitter<Trip>();
   
   tripForm: FormGroup;
-  errorMessage: string;
 
   constructor(
     private fb: FormBuilder,
@@ -31,7 +30,6 @@ export class TripEditorComponent implements OnInit, OnChanges {
   }
 
   onSubmit(): void {
-    this.errorMessage = null;
     this.trip.name = this.tripForm.controls['name'].value;
     this.trip.startDate = this.tripForm.controls['startDate'].value;
     this.trip.endDate = this.tripForm.controls['endDate'].value;
