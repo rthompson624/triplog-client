@@ -54,7 +54,7 @@ export class CreateAccountComponent implements OnInit, OnDestroy {
     this.actions$.pipe(
       ofType<AuthenticationStoreActions.CreateAccountSuccessAction>(AuthenticationStoreActions.ActionTypes.CREATE_ACCOUNT_SUCCESS),
       takeUntil(this.ngUnsubscribe)
-    ).subscribe(action => {
+    ).subscribe(() => {
       // Log user in
       const email = <string>this.accountForm.controls['email'].value;
       const password = <string>this.accountForm.controls['password'].value;
@@ -62,13 +62,6 @@ export class CreateAccountComponent implements OnInit, OnDestroy {
         email: email,
         password: password
       }));
-    });
-    // Subscribe to LOGIN_SUCCESS action
-    this.actions$.pipe(
-      ofType<AuthenticationStoreActions.LoginSuccessAction>(AuthenticationStoreActions.ActionTypes.LOGIN_SUCCESS),
-      takeUntil(this.ngUnsubscribe)
-    ).subscribe(action => {
-      this.router.navigate(['/', 'trips']);
     });
   }
 

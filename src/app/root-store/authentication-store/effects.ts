@@ -3,6 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable, of as observableOf } from 'rxjs';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../../core/services/authentication.service';
 import { AuthRequest } from '../../core/models/auth-request.model';
@@ -15,6 +16,7 @@ import { RootStoreState } from '../../root-store';
 @Injectable()
 export class AuthenticationStoreEffects {
   constructor(
+    private router: Router,
     private authService: AuthenticationService,
     private userService: UserService,
     private actions$: Actions,
@@ -61,6 +63,18 @@ export class AuthenticationStoreEffects {
   );
 
   @Effect()
+  loginSuccessEffect$: Observable<Action> = this.actions$.pipe(
+    ofType<featureActions.LoginSuccessAction>(
+      featureActions.ActionTypes.LOGIN_SUCCESS
+    ),
+    switchMap(() => {
+      return this.router.navigate(['/trips'])
+      .then(() => new featureActions.RouteNavigationAction())
+      .catch(error => new featureActions.FailureAction({ error }));
+    })
+  );
+
+  @Effect()
   logoutRequestEffect$: Observable<Action> = this.actions$.pipe(
     ofType<featureActions.LogoutRequestAction>(
       featureActions.ActionTypes.LOGOUT_REQUEST
@@ -69,6 +83,18 @@ export class AuthenticationStoreEffects {
       return observableOf(this.authService.logoutUser()).pipe(
         map(() => new featureActions.LogoutSuccessAction())
 	    );
+    })
+  );
+
+  @Effect()
+  logoutSuccessEffect$: Observable<Action> = this.actions$.pipe(
+    ofType<featureActions.LogoutSuccessAction>(
+      featureActions.ActionTypes.LOGOUT_SUCCESS
+    ),
+    switchMap(() => {
+      return this.router.navigate(['/', 'authentication', 'login'])
+      .then(() => new featureActions.RouteNavigationAction())
+      .catch(error => new featureActions.FailureAction({ error }));
     })
   );
 

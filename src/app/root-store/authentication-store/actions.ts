@@ -12,7 +12,9 @@ export enum ActionTypes {
   LOGOUT_REQUEST = 'Logout Request',
   LOGOUT_SUCCESS = 'Logout Success',
   RESTORE_AUTHENTICATION_STATE_REQUEST = 'Restore Authentication State Request',
-  RESTORE_AUTHENTICATION_STATE_SUCCESS = 'Restore Authentication State Success'
+  RESTORE_AUTHENTICATION_STATE_SUCCESS = 'Restore Authentication State Success',
+  FAILURE = 'Authentication Failure',
+  ROUTE_NAVIGATION = 'Route Navigation'
 }
 
 export class CreateAccountRequestAction implements Action {
@@ -65,6 +67,15 @@ export class RestoreAuthenticationStateSuccessAction implements Action {
   constructor(public payload: AuthResponse) {}
 }
 
+export class RouteNavigationAction implements Action {
+  readonly type = ActionTypes.ROUTE_NAVIGATION;
+}
+
+export class FailureAction implements Action {
+  readonly type = ActionTypes.FAILURE;
+  constructor(public payload: { error: string }) {}
+}
+
 export type Actions = 
   CreateAccountRequestAction |
   CreateAccountFailureAction |
@@ -75,5 +86,7 @@ export type Actions =
   LogoutRequestAction |
   LogoutSuccessAction |
   RestoreAuthenticationStateRequestAction |
-  RestoreAuthenticationStateSuccessAction
+  RestoreAuthenticationStateSuccessAction |
+  RouteNavigationAction |
+  FailureAction
 ;

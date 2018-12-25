@@ -13,7 +13,8 @@ export enum ActionTypes {
   UPDATE_SUCCESS = 'Trip Update Success',
   CREATE = 'Trip Create Request',
   CREATE_SUCCESS = 'Trip Create Success',
-  FAILURE = 'Trip Failure'
+  FAILURE = 'Trip Failure',
+  ROUTE_NAVIGATION = 'Route Navigation'
 }
 
 export class LoadManyAction implements Action {
@@ -71,6 +72,10 @@ export class FailureAction implements Action {
   constructor(public payload: { error: string }) {}
 }
 
+export class RouteNavigationAction implements Action {
+  readonly type = ActionTypes.ROUTE_NAVIGATION;
+}
+
 export type Actions = 
   LoadManyAction|
   LoadManySuccessAction|
@@ -82,5 +87,6 @@ export type Actions =
   UpdateSuccessAction|
   CreateAction|
   CreateSuccessAction|
-  FailureAction
+  FailureAction|
+  RouteNavigationAction
 ;

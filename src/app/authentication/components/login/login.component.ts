@@ -1,10 +1,7 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Actions, ofType } from '@ngrx/effects';
-import { takeUntil } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { RootStoreState, AuthenticationStoreActions, AuthenticationStoreSelectors } from '../../../root-store';
 
@@ -14,30 +11,21 @@ import { RootStoreState, AuthenticationStoreActions, AuthenticationStoreSelector
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isLoading$: Observable<boolean>;
   error$: Observable<string>;
-  private ngUnsubscribe = new Subject<boolean>();
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
-    private store$: Store<RootStoreState.State>,
-    private actions$: Actions
+    private store$: Store<RootStoreState.State>
   ) {
   }
 
   ngOnInit() {
     this.createLoginForm();
-    this.registerListeners();
     this.isLoading$ = this.store$.select(AuthenticationStoreSelectors.selectIsLoading);
     this.error$ = this.store$.select(AuthenticationStoreSelectors.selectError);
-  }
-
-  ngOnDestroy() {
-    this.ngUnsubscribe.next(true);
-    this.ngUnsubscribe.complete();
   }
 
   onSubmit(): void {
@@ -47,16 +35,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       email: email,
       password: password
     }));
-  }
-
-  registerListeners(): void {
-    // Subscribe to LOGIN_SUCCESS action
-    this.actions$.pipe(
-      ofType<AuthenticationStoreActions.LoginSuccessAction>(AuthenticationStoreActions.ActionTypes.LOGIN_SUCCESS),
-      takeUntil(this.ngUnsubscribe)
-    ).subscribe(action => {
-      this.router.navigate(['/', 'trips']);
-    });
   }
 
   private createLoginForm(): void {
