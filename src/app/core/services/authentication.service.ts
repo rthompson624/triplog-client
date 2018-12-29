@@ -48,7 +48,6 @@ export class AuthenticationService {
 
   logoutUser(): void {
     this.deleteInLocalStorage('accessToken');
-    this.deleteInLocalStorage('user');
   }
 
   private saveInLocalStorage(key: string, value: string): void {

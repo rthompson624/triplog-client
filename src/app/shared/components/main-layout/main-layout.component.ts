@@ -13,6 +13,7 @@ import { User } from '../../../core/models/user.model';
 })
 export class MainLayoutComponent implements OnInit {
   user$: Observable<User>;
+  accessToken$: Observable<string>;
   isLoading$: Observable<boolean>;
   errorMessage$: Observable<string>;
 
@@ -22,9 +23,9 @@ export class MainLayoutComponent implements OnInit {
 
   ngOnInit() {
     this.user$ = this.store$.select(AuthenticationStoreSelectors.selectUser);
+    this.accessToken$ = this.store$.select(AuthenticationStoreSelectors.selectAccessToken);
     this.isLoading$ = this.store$.select(RootStoreSelectors.selectIsLoading);
     this.errorMessage$ = this.store$.select(RootStoreSelectors.selectError);
-    this.store$.dispatch(new AuthenticationStoreActions.RestoreAuthenticationStateRequestAction());
   }
 
   onLogout(): void {

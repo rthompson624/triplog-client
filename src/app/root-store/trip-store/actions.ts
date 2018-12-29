@@ -3,18 +3,18 @@ import { Trip } from '../../core/models/trip.model';
 import { Multiple } from '../../core/models/multiple.model';
 
 export enum ActionTypes {
-  LOAD_MANY = 'Trips Load Request',
-  LOAD_MANY_SUCCESS = 'Trips Load Success',
-  LOAD_ONE = 'Trip Load Request',
-  LOAD_ONE_SUCCESS = 'Trip Load Success',
-  DELETE = 'Trip Delete Request',
-  DELETE_SUCCESS = 'Trip Delete Success',
-  UPDATE = 'Trip Update Request',
-  UPDATE_SUCCESS = 'Trip Update Success',
-  CREATE = 'Trip Create Request',
-  CREATE_SUCCESS = 'Trip Create Success',
-  FAILURE = 'Trip Failure',
-  ROUTE_NAVIGATION = 'Route Navigation'
+  LOAD_MANY = '[trip] Load many',
+  LOAD_MANY_SUCCESS = '[trip] Load many (success)',
+  LOAD_ONE = '[trip] Load',
+  LOAD_ONE_SUCCESS = '[trip] Load (success)',
+  DELETE = '[trip] Delete',
+  DELETE_SUCCESS = '[trip] Delete (success)',
+  UPDATE = '[trip] Update',
+  UPDATE_SUCCESS = '[trip] Update (success)',
+  CREATE = '[trip] Create',
+  CREATE_SUCCESS = '[trip] Create (success)',
+  FAILURE = '[trip] Failure',
+  ROUTE_NAVIGATION = '[trip] Route navigation'
 }
 
 export class LoadManyAction implements Action {

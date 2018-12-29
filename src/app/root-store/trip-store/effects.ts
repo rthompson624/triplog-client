@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable, of as observableOf } from 'rxjs';
-import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { catchError, map, switchMap, withLatestFrom, concatMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 import { TripService } from '../../core/services/trip.service';
@@ -39,7 +39,7 @@ export class TripStoreEffects {
           new featureActions.LoadManySuccessAction(response)
         ),
         catchError(error =>
-          observableOf(new featureActions.FailureAction({ error }))
+          observableOf(new featureActions.FailureAction({ error: this.formatError(error) }))
         )
       )
     })
@@ -56,7 +56,7 @@ export class TripStoreEffects {
           new featureActions.LoadOneSuccessAction(response)
         ),
         catchError(error =>
-          observableOf(new featureActions.FailureAction({ error }))
+          observableOf(new featureActions.FailureAction({ error: this.formatError(error) }))
         )
       )
     )
@@ -67,13 +67,13 @@ export class TripStoreEffects {
     ofType<featureActions.DeleteAction>(
       featureActions.ActionTypes.DELETE
     ),
-    switchMap(action =>
+    concatMap(action =>
       this.dataService.delete(action.payload).pipe(
         map(() =>
           new featureActions.DeleteSuccessAction(action.payload)
         ),
         catchError(error =>
-          observableOf(new featureActions.FailureAction({ error }))
+          observableOf(new featureActions.FailureAction({ error: this.formatError(error) }))
         )
       )
     )
@@ -87,7 +87,7 @@ export class TripStoreEffects {
     switchMap(() => {
       return this.router.navigate(['/trips'])
       .then(() => new featureActions.RouteNavigationAction())
-      .catch(error => new featureActions.FailureAction({ error }));
+      .catch(error => new featureActions.FailureAction({ error: this.formatError(error) }));
     })
   );
 
@@ -96,13 +96,13 @@ export class TripStoreEffects {
     ofType<featureActions.UpdateAction>(
       featureActions.ActionTypes.UPDATE
     ),
-    switchMap(action =>
+    concatMap(action =>
       this.dataService.update(action.payload).pipe(
         map(response =>
           new featureActions.UpdateSuccessAction(response)
         ),
         catchError(error =>
-          observableOf(new featureActions.FailureAction({ error }))
+          observableOf(new featureActions.FailureAction({ error: this.formatError(error) }))
         )
       )
     )
@@ -116,7 +116,7 @@ export class TripStoreEffects {
     switchMap(action => {
       return this.router.navigate(['/trips', action.payload.id])
       .then(() => new featureActions.RouteNavigationAction())
-      .catch(error => new featureActions.FailureAction({ error }));
+      .catch(error => new featureActions.FailureAction({ error: this.formatError(error) }));
     })
   );
 
@@ -126,14 +126,14 @@ export class TripStoreEffects {
       featureActions.ActionTypes.CREATE
     ),
     withLatestFrom(this.store$),
-    switchMap(([action, store])  => {
+    concatMap(([action, store])  => {
       action.payload.creatorId = store.authentication.user.id;
       return this.dataService.create(action.payload).pipe(
         map(response =>
           new featureActions.CreateSuccessAction(response)
         ),
         catchError(error =>
-          observableOf(new featureActions.FailureAction({ error }))
+          observableOf(new featureActions.FailureAction({ error: this.formatError(error) }))
         )
       )
     })
@@ -147,8 +147,16 @@ export class TripStoreEffects {
     switchMap(action => {
       return this.router.navigate(['/trips', action.payload.id])
       .then(() => new featureActions.RouteNavigationAction())
-      .catch(error => new featureActions.FailureAction({ error }));
+      .catch(error => new featureActions.FailureAction({ error: this.formatError(error) }));
     })
   );
+
+  private formatError(error: any): string {
+    if (error.error && error.error.message) {
+      return error.error.message;
+    }
+    if (error.error) return error.error.toString();
+    if (error) return error.toString();
+  }
 
 }

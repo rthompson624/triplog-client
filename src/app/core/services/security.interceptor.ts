@@ -4,7 +4,6 @@ import { first, switchMap } from 'rxjs/operators';
 import { Observable } from "rxjs";
 import { Store } from '@ngrx/store';
 
-import { AppConfiguration } from '../../../configuration/configuration';
 import { RootStoreState } from '../../root-store';
 
 @Injectable()
@@ -19,7 +18,7 @@ export class SecurityInterceptor implements HttpInterceptor {
     return this.store$.pipe(
       first(),
       switchMap(store => {
-        if (this.needsToken(request.url)) {
+        if (this.needsToken(request.url, request.method)) {
           request = request.clone({headers: request.headers.append('Authorization', store.authentication.accessToken)});
         }
         return next.handle(request);
@@ -27,12 +26,11 @@ export class SecurityInterceptor implements HttpInterceptor {
     );
   }
 
-  private needsToken(url: string): boolean {
-    let isProtected = false;
-    AppConfiguration.protectedRoutes.forEach(route => {
-      if (url.includes(route)) isProtected = true;
-    });
-    return isProtected;
+  private needsToken(url: string, method: string): boolean {
+    let retVal = true;
+    if (url.toLowerCase().includes('users') && method.toLowerCase().includes('post')) retVal = false;
+    if (url.toLowerCase().includes('authentication')) retVal = false;
+    return retVal;
   }
 
 }

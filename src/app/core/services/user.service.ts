@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
   providedIn: CoreModule
 })
 export class UserService {
-  private authUrl: string = 'http://' + environment.restApiDomain + '/users';
+  private userUrl: string = 'http://' + environment.restApiDomain + '/users';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -18,7 +18,13 @@ export class UserService {
   create(user: User): Observable<User> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {headers: headers};
-    return this.httpClient.post<User>(this.authUrl, user, options);
+    return this.httpClient.post<User>(this.userUrl, user, options);
+  }
+
+  getOne(id: number): Observable<User> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const options = {headers: headers};
+    return this.httpClient.get<User>(this.userUrl + '/' + id, options);
   }
 
 }

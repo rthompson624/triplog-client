@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable, of as observableOf } from 'rxjs';
-import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { catchError, map, switchMap, withLatestFrom, concatMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../../core/services/authentication.service';
@@ -28,7 +28,7 @@ export class AuthenticationStoreEffects {
     ofType<featureActions.CreateAccountRequestAction>(
       featureActions.ActionTypes.CREATE_ACCOUNT_REQUEST
     ),
-    switchMap(action => {
+    concatMap(action => {
       const user: User = {
         email: action.payload.email,
         password: action.payload.password
@@ -36,7 +36,7 @@ export class AuthenticationStoreEffects {
       return this.userService.create(user).pipe(
         map(user => new featureActions.CreateAccountSuccessAction(user)),
         catchError(error => {
-          return observableOf(new featureActions.CreateAccountFailureAction({ error: this.formatCreateAccountError(error) }));
+          return observableOf(new featureActions.CreateAccountFailureAction({ error: this.formatError(error) }));
         })
 	    );
     })
@@ -56,7 +56,7 @@ export class AuthenticationStoreEffects {
       return this.authService.authenticateUser(authReq).pipe(
         map(authRes => new featureActions.LoginSuccessAction(authRes)),
         catchError(error => {
-          return observableOf(new featureActions.LoginFailureAction({ error: error.error.message }));
+          return observableOf(new featureActions.LoginFailureAction({ error: this.formatError(error) }));
         })
 	    );
     })
@@ -70,7 +70,7 @@ export class AuthenticationStoreEffects {
     switchMap(() => {
       return this.router.navigate(['/trips'])
       .then(() => new featureActions.RouteNavigationAction())
-      .catch(error => new featureActions.FailureAction({ error }));
+      .catch(error => new featureActions.FailureAction({ error: this.formatError(error) }));
     })
   );
 
@@ -94,7 +94,7 @@ export class AuthenticationStoreEffects {
     switchMap(() => {
       return this.router.navigate(['/', 'authentication', 'login'])
       .then(() => new featureActions.RouteNavigationAction())
-      .catch(error => new featureActions.FailureAction({ error }));
+      .catch(error => new featureActions.FailureAction({ error: this.formatError(error) }));
     })
   );
 
@@ -119,17 +119,56 @@ export class AuthenticationStoreEffects {
             accessToken: this.authService.getAccessToken()
           };
         } else {
-          authRes = {
-            user: null,
-            accessToken: null
-          };
+          throw 'user not authenticated';
         }
       }
       return observableOf(new featureActions.RestoreAuthenticationStateSuccessAction(authRes));
+    }),
+    catchError(() => observableOf(new featureActions.RestoreAuthenticationStateFailureAction()))
+  );
+
+  @Effect()
+  restoreAuthenticationStateSuccessEffect$: Observable<Action> = this.actions$.pipe(
+    ofType<featureActions.RestoreAuthenticationStateSuccessAction>(
+      featureActions.ActionTypes.RESTORE_AUTHENTICATION_STATE_SUCCESS
+    ),
+    switchMap(action => 
+      // Verify token is still valid by attempting an API call
+      this.userService.getOne(action.payload.user.id).pipe(
+        map(() => new featureActions.TokenValidationSuccessAction()),
+        catchError(() => {
+          this.authService.logoutUser();
+          return observableOf(new featureActions.TokenValidationFailureAction());
+        })
+      )
+    )
+  );
+
+  @Effect()
+  restoreAuthenticationStateFailureEffect$: Observable<Action> = this.actions$.pipe(
+    ofType<featureActions.RestoreAuthenticationStateFailureAction>(
+      featureActions.ActionTypes.RESTORE_AUTHENTICATION_STATE_FAILURE
+    ),
+    switchMap(() => {
+      return this.router.navigate(['/', 'authentication', 'login'])
+      .then(() => new featureActions.RouteNavigationAction())
+      .catch(error => new featureActions.FailureAction({ error: this.formatError(error) }));
     })
   );
 
-  private formatCreateAccountError(error: any): string {
+  @Effect()
+  tokenValidationFailureEffect$: Observable<Action> = this.actions$.pipe(
+    ofType<featureActions.TokenValidationFailureAction>(
+      featureActions.ActionTypes.TOKEN_VALIDATION_FAILURE
+    ),
+    switchMap(() => {
+      return this.router.navigate(['/', 'authentication', 'login'])
+      .then(() => new featureActions.RouteNavigationAction())
+      .catch(error => new featureActions.FailureAction({ error: this.formatError(error) }));
+    })
+  );
+
+  private formatError(error: any): string {
     if (error.error && error.error.errors && error.error.errors.length) {
       switch (error.error.errors[0].message) {
         case 'email_UNIQUE must be unique':

@@ -61,6 +61,14 @@ export function authenticationReducer(state = initialState, action: Actions): St
         error: null,
         isLoading: true
       };
+    case ActionTypes.RESTORE_AUTHENTICATION_STATE_FAILURE:
+      return {
+        ...state,
+        user: null,
+        accessToken: null,
+        error: null,
+        isLoading: false
+      };
     case ActionTypes.RESTORE_AUTHENTICATION_STATE_SUCCESS:
       return {
         ...state,
@@ -69,6 +77,13 @@ export function authenticationReducer(state = initialState, action: Actions): St
         error: null,
         isLoading: false
       };
+    case ActionTypes.TOKEN_VALIDATION_SUCCESS:
+      return state;
+    case ActionTypes.TOKEN_VALIDATION_FAILURE:
+      return {
+        ...state,
+        accessToken: null
+      }
     default: {
       return state;
     }

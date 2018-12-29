@@ -1,0 +1,29 @@
+{
+  payload: {
+    error: {
+      headers: {
+        normalizedNames: {},
+        lazyUpdate: null
+      },
+      status: 401,
+      statusText: 'Unauthorized',
+      url: 'http://localhost:3030/trips?$skip=0&$limit=8&creatorId=11',
+      ok: false,
+      name: 'HttpErrorResponse',
+      message: 'Http failure response for http://localhost:3030/trips?$skip=0&$limit=8&creatorId=11: 401 Unauthorized',
+      error: {
+        name: 'NotAuthenticated',
+        message: 'jwt expired',
+        code: 401,
+        className: 'not-authenticated',
+        data: {
+          name: 'TokenExpiredError',
+          message: 'jwt expired',
+          expiredAt: '2018-12-26T18:10:15.000Z'
+        },
+        errors: {}
+      }
+    }
+  },
+  type: 'Trip Failure'
+}

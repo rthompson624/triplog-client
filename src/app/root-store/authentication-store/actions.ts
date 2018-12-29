@@ -3,18 +3,21 @@ import { AuthResponse } from '../../core/models/auth-response.model';
 import { User } from '../../core/models/user.model';
 
 export enum ActionTypes {
-  CREATE_ACCOUNT_REQUEST = 'Create Account Request',
-  CREATE_ACCOUNT_FAILURE = 'Create Account Failure',
-  CREATE_ACCOUNT_SUCCESS = 'Create Account Success',
-  LOGIN_REQUEST = 'Login Request',
-  LOGIN_FAILURE = 'Login Failure',
-  LOGIN_SUCCESS = 'Login Success',
-  LOGOUT_REQUEST = 'Logout Request',
-  LOGOUT_SUCCESS = 'Logout Success',
-  RESTORE_AUTHENTICATION_STATE_REQUEST = 'Restore Authentication State Request',
-  RESTORE_AUTHENTICATION_STATE_SUCCESS = 'Restore Authentication State Success',
-  FAILURE = 'Authentication Failure',
-  ROUTE_NAVIGATION = 'Route Navigation'
+  CREATE_ACCOUNT_REQUEST = '[authentication] Create account',
+  CREATE_ACCOUNT_FAILURE = '[authentication] Create account (failure)',
+  CREATE_ACCOUNT_SUCCESS = '[authentication] Create account (success)',
+  LOGIN_REQUEST = '[authentication] Login',
+  LOGIN_FAILURE = '[authentication] Login (failure)',
+  LOGIN_SUCCESS = '[authentication] Login (success)',
+  LOGOUT_REQUEST = '[authentication] Logout',
+  LOGOUT_SUCCESS = '[authentication] Logout (success)',
+  RESTORE_AUTHENTICATION_STATE_REQUEST = '[authentication] Restore',
+  RESTORE_AUTHENTICATION_STATE_SUCCESS = '[authentication] Restore (success)',
+  RESTORE_AUTHENTICATION_STATE_FAILURE = '[authentication] Restore (failure)',
+  TOKEN_VALIDATION_SUCCESS = '[authentication] Token validation (success)',
+  TOKEN_VALIDATION_FAILURE = '[authentication] Token validation (failure)',
+  FAILURE = '[authentication] Failure',
+  ROUTE_NAVIGATION = '[authentication] Route navigation'
 }
 
 export class CreateAccountRequestAction implements Action {
@@ -62,9 +65,24 @@ export class RestoreAuthenticationStateRequestAction implements Action {
   constructor() {}
 }
 
+export class RestoreAuthenticationStateFailureAction implements Action {
+  readonly type = ActionTypes.RESTORE_AUTHENTICATION_STATE_FAILURE;
+  constructor() {}
+}
+
 export class RestoreAuthenticationStateSuccessAction implements Action {
   readonly type = ActionTypes.RESTORE_AUTHENTICATION_STATE_SUCCESS;
   constructor(public payload: AuthResponse) {}
+}
+
+export class TokenValidationSuccessAction implements Action {
+  readonly type = ActionTypes.TOKEN_VALIDATION_SUCCESS;
+  constructor() {}
+}
+
+export class TokenValidationFailureAction implements Action {
+  readonly type = ActionTypes.TOKEN_VALIDATION_FAILURE;
+  constructor() {}
 }
 
 export class RouteNavigationAction implements Action {
@@ -86,7 +104,10 @@ export type Actions =
   LogoutRequestAction |
   LogoutSuccessAction |
   RestoreAuthenticationStateRequestAction |
+  RestoreAuthenticationStateFailureAction |
   RestoreAuthenticationStateSuccessAction |
+  TokenValidationSuccessAction |
+  TokenValidationFailureAction |
   RouteNavigationAction |
   FailureAction
 ;

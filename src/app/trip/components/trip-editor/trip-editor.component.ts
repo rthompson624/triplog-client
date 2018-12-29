@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 import { Trip } from '../../../core/models/trip.model';
 import { LocationService } from '../../../core/services/location.service';
@@ -15,6 +16,7 @@ export class TripEditorComponent implements OnInit, OnChanges {
   @Output() tripSave = new EventEmitter<Trip>();
   
   tripForm: FormGroup;
+  endDateStart: Date;
 
   constructor(
     private fb: FormBuilder,
@@ -34,6 +36,10 @@ export class TripEditorComponent implements OnInit, OnChanges {
     this.trip.startDate = this.tripForm.controls['startDate'].value;
     this.trip.endDate = this.tripForm.controls['endDate'].value;
     this.tripSave.emit(this.trip);
+  }
+
+  onStartDateChange(event: MatDatepickerInputEvent<Date>): void {
+    this.endDateStart = event.value;
   }
 
   private buildForm(): void {
