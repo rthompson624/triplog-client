@@ -5,15 +5,15 @@ import { Observable, of as observableOf } from 'rxjs';
 import { catchError, map, switchMap, withLatestFrom, concatMap, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
-import { TripService } from '../../core/services/trip.service';
+import { TripLogService } from '../../core/services/trip-log.service';
 import * as featureActions from './actions';
 import { RootStoreState } from '../../root-store';
 
 @Injectable()
-export class TripStoreEffects {
+export class TripLogStoreEffects {
   constructor(
     private router: Router,
-    private dataService: TripService,
+    private dataService: TripLogService,
     private actions$: Actions,
     private store$: Store<RootStoreState.State>
   ) {}
@@ -28,13 +28,13 @@ export class TripStoreEffects {
       let pageIndex = action.payload.pageIndex;
       // If page index is null use what the store has
       if (pageIndex === null) {
-        if (store.trip.page.skip) {
-          pageIndex = store.trip.page.skip / store.trip.page.limit;
+        if (store.triplog.page.skip) {
+          pageIndex = store.triplog.page.skip / store.triplog.page.limit;
         } else {
           pageIndex = 0;
         }
       }
-      return this.dataService.getMany(pageIndex, store.authentication.user.id).pipe(
+      return this.dataService.getMany(pageIndex, action.payload.tripId).pipe(
         map(response =>
           new featureActions.LoadManySuccessAction(response)
         ),
@@ -80,18 +80,6 @@ export class TripStoreEffects {
   );
 
   @Effect()
-  deleteSuccessEffect$: Observable<Action> = this.actions$.pipe(
-    ofType<featureActions.DeleteSuccessAction>(
-      featureActions.ActionTypes.DELETE_SUCCESS
-    ),
-    switchMap(() => {
-      return this.router.navigate(['/trips'])
-      .then(() => new featureActions.RouteNavigationAction())
-      .catch(error => new featureActions.FailureAction({ error: this.formatError(error) }));
-    })
-  );
-
-  @Effect()
   updateEffect$: Observable<Action> = this.actions$.pipe(
     ofType<featureActions.UpdateAction>(
       featureActions.ActionTypes.UPDATE
@@ -109,25 +97,13 @@ export class TripStoreEffects {
   );
 
   @Effect()
-  updateSuccessEffect$: Observable<Action> = this.actions$.pipe(
-    ofType<featureActions.UpdateAction>(
-      featureActions.ActionTypes.UPDATE_SUCCESS
-    ),
-    switchMap(action => {
-      return this.router.navigate(['/trips', action.payload.id])
-      .then(() => new featureActions.RouteNavigationAction())
-      .catch(error => new featureActions.FailureAction({ error: this.formatError(error) }));
-    })
-  );
-
-  @Effect()
   createEffect$: Observable<Action> = this.actions$.pipe(
     ofType<featureActions.CreateAction>(
       featureActions.ActionTypes.CREATE
     ),
     withLatestFrom(this.store$),
     concatMap(([action, store])  => {
-      action.payload.creatorId = store.authentication.user.id;
+      action.payload.userId = store.authentication.user.id;
       return this.dataService.create(action.payload).pipe(
         map(response =>
           new featureActions.CreateSuccessAction(response)
@@ -136,18 +112,6 @@ export class TripStoreEffects {
           observableOf(new featureActions.FailureAction({ error: this.formatError(error) }))
         )
       )
-    })
-  );
-
-  @Effect()
-  createSuccessEffect$: Observable<Action> = this.actions$.pipe(
-    ofType<featureActions.CreateSuccessAction>(
-      featureActions.ActionTypes.CREATE_SUCCESS
-    ),
-    switchMap(action => {
-      return this.router.navigate(['/trips', action.payload.id])
-      .then(() => new featureActions.RouteNavigationAction())
-      .catch(error => new featureActions.FailureAction({ error: this.formatError(error) }));
     })
   );
 

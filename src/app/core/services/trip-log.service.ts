@@ -4,15 +4,15 @@ import { Observable } from 'rxjs';
 
 import { CoreModule } from '../core.module';
 import { Multiple } from '../models/multiple.model';
-import { Trip } from '../models/trip.model';
+import { TripLog } from '../models/trip-log.model';
 import { environment } from '../../../environments/environment';
 import { AppConfiguration } from '../../../configuration/configuration';
 
 @Injectable({
   providedIn: CoreModule
 })
-export class TripService {
-  private confUrl: string = 'http://' + environment.restApiDomain + '/trips';
+export class TripLogService {
+  private confUrl: string = 'http://' + environment.restApiDomain + '/triplogs';
   private pageSize: number = AppConfiguration.apiPageSize;
 
   constructor(
@@ -20,49 +20,43 @@ export class TripService {
   ) {
   }
 
-  create(trip: Trip): Observable<Trip> {
+  create(triplog: TripLog): Observable<TripLog> {
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json');
     const options = {headers: headers};
-    return this.httpClient.post<Trip>(this.confUrl, trip, options);
+    return this.httpClient.post<TripLog>(this.confUrl, triplog, options);
   }
 
-  update(trip: Trip): Observable<Trip> {
+  update(triplog: TripLog): Observable<TripLog> {
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json');
     const options = {headers: headers};
-    return this.httpClient.put<Trip>(this.confUrl + '/' + trip.id, trip, options);
+    return this.httpClient.put<TripLog>(this.confUrl + '/' + triplog.id, triplog, options);
   }
 
-  getOne(id: number): Observable<Trip> {
+  getOne(id: number): Observable<TripLog> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {headers: headers};
-    return this.httpClient.get<Trip>(this.confUrl + '/' + id, options);
+    return this.httpClient.get<TripLog>(this.confUrl + '/' + id, options);
   }
 
-  getMany(pageIndex: number, creatorId?: number): Observable<Multiple<Trip>> {
+  getMany(pageIndex: number, tripId: number): Observable<Multiple<TripLog>> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const skip = (pageIndex * this.pageSize);
     let params: HttpParams;
-    if (creatorId) {
-      params = new HttpParams()
-        .set('$skip', skip.toString(10))
-        .set('$limit', this.pageSize.toString(10))
-        .set('$sort[startDate]', '-1')
-        .set('creatorId', String(creatorId));
-    } else {
-      params = new HttpParams()
-        .set('$skip', skip.toString(10))
-        .set('$limit', this.pageSize.toString(10));
-    }
+    params = new HttpParams()
+      .set('$skip', skip.toString(10))
+      .set('$limit', this.pageSize.toString(10))
+      .set('$sort[logDate]', '1')
+      .set('tripId', String(tripId));
     const options = {headers: headers, params: params};
-    return this.httpClient.get<Multiple<Trip>>(this.confUrl, options);
+    return this.httpClient.get<Multiple<TripLog>>(this.confUrl, options);
   }
 
-  delete(trip: Trip): Observable<void> {
+  delete(triplog: TripLog): Observable<void> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {headers: headers};
-    return this.httpClient.delete<void>(this.confUrl + '/' + trip.id, options);
+    return this.httpClient.delete<void>(this.confUrl + '/' + triplog.id, options);
   }
 
 }

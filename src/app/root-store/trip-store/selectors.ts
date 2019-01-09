@@ -6,6 +6,7 @@ import { Page } from '../../core/models/page.model';
 export const getPage = (state: State): Page => state.page;
 export const getError = (state: State): any => state.error;
 export const getIsLoading = (state: State): boolean => state.isLoading;
+export const getSelectedTrip = (state: State): Trip => state.selectedTrip;
 
 // Parameter (case-sensitive) in createFeatureSelector() must match parameter in StoreModule.forFeature() call in xxxxx-store.module.ts
 export const selectTripState: MemoizedSelector<object, State> = createFeatureSelector<State>('trip');
@@ -24,3 +25,4 @@ export const selectTripById = (id: number) =>
 export const selectTripPage: MemoizedSelector<object, Page> = createSelector(selectTripState, getPage);
 export const selectTripError: MemoizedSelector<object, any> = createSelector(selectTripState, getError);
 export const selectTripIsLoading: MemoizedSelector<object, boolean> = createSelector(selectTripState, getIsLoading);
+export const selectTripSelected: MemoizedSelector<object, Trip> = createSelector(selectTripState, getSelectedTrip);

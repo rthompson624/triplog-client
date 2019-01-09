@@ -56,6 +56,8 @@ a:hover {
 .main {
   margin: 66px 0 0 0;
   padding: 10px;
+  background-color: aliceblue;
+  min-height: 100%;
 }
 
 .site-title {

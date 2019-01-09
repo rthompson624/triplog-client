@@ -33,7 +33,12 @@ export class ListComponent implements OnInit {
   }
 
   selectTrip(trip: Trip): void {
+    this.store$.dispatch(new TripStoreActions.SelectOneAction(trip));
     this.router.navigate([trip.id.toString(10)], {relativeTo: this.route});
+  }
+
+  createNew(): void {
+    this.router.navigate(['create'], {relativeTo: this.route});
   }
 
   onLoad(event: PageEvent) {

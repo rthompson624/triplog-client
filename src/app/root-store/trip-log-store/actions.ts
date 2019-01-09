@@ -1,31 +1,31 @@
 import { Action } from '@ngrx/store';
-import { Trip } from '../../core/models/trip.model';
+import { TripLog } from '../../core/models/trip-log.model';
 import { Multiple } from '../../core/models/multiple.model';
 
 export enum ActionTypes {
-  LOAD_MANY = '[trip] Load many',
-  LOAD_MANY_SUCCESS = '[trip] Load many (success)',
-  LOAD_ONE = '[trip] Load',
-  LOAD_ONE_SUCCESS = '[trip] Load (success)',
-  DELETE = '[trip] Delete',
-  DELETE_SUCCESS = '[trip] Delete (success)',
-  UPDATE = '[trip] Update',
-  UPDATE_SUCCESS = '[trip] Update (success)',
-  CREATE = '[trip] Create',
-  CREATE_SUCCESS = '[trip] Create (success)',
-  FAILURE = '[trip] Failure',
-  ROUTE_NAVIGATION = '[trip] Route navigation',
-  SELECT_ONE = '[trip] Select'
+  LOAD_MANY = '[triplog] Load many',
+  LOAD_MANY_SUCCESS = '[triplog] Load many (success)',
+  LOAD_ONE = '[triplog] Load',
+  LOAD_ONE_SUCCESS = '[triplog] Load (success)',
+  DELETE = '[triplog] Delete',
+  DELETE_SUCCESS = '[triplog] Delete (success)',
+  UPDATE = '[triplog] Update',
+  UPDATE_SUCCESS = '[triplog] Update (success)',
+  CREATE = '[triplog] Create',
+  CREATE_SUCCESS = '[triplog] Create (success)',
+  FAILURE = '[triplog] Failure',
+  ROUTE_NAVIGATION = '[triplog] Route navigation',
+  SELECT = '[triplog] Select'
 }
 
 export class LoadManyAction implements Action {
   readonly type = ActionTypes.LOAD_MANY;
-  constructor(public payload: { pageIndex: number }) {}
+  constructor(public payload: { tripId: number, pageIndex: number }) {}
 }
 
 export class LoadManySuccessAction implements Action {
   readonly type = ActionTypes.LOAD_MANY_SUCCESS;
-  constructor(public payload: Multiple<Trip>) {}
+  constructor(public payload: Multiple<TripLog>) {}
 }
 
 export class LoadOneAction implements Action {
@@ -35,37 +35,37 @@ export class LoadOneAction implements Action {
 
 export class LoadOneSuccessAction implements Action {
   readonly type = ActionTypes.LOAD_ONE_SUCCESS;
-  constructor(public payload: Trip) {}
+  constructor(public payload: TripLog) {}
 }
 
 export class DeleteAction implements Action {
   readonly type = ActionTypes.DELETE;
-  constructor(public payload: Trip) {}
+  constructor(public payload: TripLog) {}
 }
 
 export class DeleteSuccessAction implements Action {
   readonly type = ActionTypes.DELETE_SUCCESS;
-  constructor(public payload: Trip) {}
+  constructor(public payload: TripLog) {}
 }
 
 export class UpdateAction implements Action {
   readonly type = ActionTypes.UPDATE;
-  constructor(public payload: Trip) {}
+  constructor(public payload: TripLog) {}
 }
 
 export class UpdateSuccessAction implements Action {
   readonly type = ActionTypes.UPDATE_SUCCESS;
-  constructor(public payload: Trip) {}
+  constructor(public payload: TripLog) {}
 }
 
 export class CreateAction implements Action {
   readonly type = ActionTypes.CREATE;
-  constructor(public payload: Trip) {}
+  constructor(public payload: TripLog) {}
 }
 
 export class CreateSuccessAction implements Action {
   readonly type = ActionTypes.CREATE_SUCCESS;
-  constructor(public payload: Trip) {}
+  constructor(public payload: TripLog) {}
 }
 
 export class FailureAction implements Action {
@@ -77,9 +77,9 @@ export class RouteNavigationAction implements Action {
   readonly type = ActionTypes.ROUTE_NAVIGATION;
 }
 
-export class SelectOneAction implements Action {
-  readonly type = ActionTypes.SELECT_ONE;
-  constructor(public payload: Trip) {}
+export class SelectAction implements Action {
+  readonly type = ActionTypes.SELECT;
+  constructor(public payload: TripLog) {}
 }
 
 export type Actions = 
@@ -95,5 +95,5 @@ export type Actions =
   CreateSuccessAction|
   FailureAction|
   RouteNavigationAction|
-  SelectOneAction
+  SelectAction
 ;

@@ -21,4 +21,13 @@ export class DateService {
     }
   }
 
+  formatDateTimeLong(value: string): string {
+    if (value) {
+      const date = moment(value);
+      return date.format('dddd, MMM Do YYYY, h:mm a');
+    } else {
+      return '';
+    }
+  }
+
 }

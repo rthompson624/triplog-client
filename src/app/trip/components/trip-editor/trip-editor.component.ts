@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 import { Trip } from '../../../core/models/trip.model';
-import { LocationService } from '../../../core/services/location.service';
 
 @Component({
   selector: 'app-trip-editor',
@@ -19,8 +18,7 @@ export class TripEditorComponent implements OnInit, OnChanges {
   endDateStart: Date;
 
   constructor(
-    private fb: FormBuilder,
-    public locationService: LocationService
+    private fb: FormBuilder
   ) {
   }
 

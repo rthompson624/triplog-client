@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy
 import { PageEvent } from '@angular/material';
 import { Trip } from '../../../core/models/trip.model';
 import { Page } from '../../../core/models/page.model';
-import { LocationService } from '../../../core/services/location.service';
 import { DateService } from '../../../core/services/date.service';
 
 @Component({
@@ -19,7 +18,6 @@ export class TripListComponent implements OnInit {
   @Output() load = new EventEmitter<PageEvent>();
 
   constructor(
-    public locationService: LocationService,
     public dateService: DateService
   ) { }
 

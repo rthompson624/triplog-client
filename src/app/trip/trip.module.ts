@@ -3,12 +3,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {
   MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, 
-  MatProgressSpinnerModule, MatTableModule, MatCardModule, MatDialogModule,
+  MatProgressSpinnerModule, MatTableModule, MatDialogModule,
   MatPaginatorModule, MatDatepickerModule, MatSelectModule
 } from '@angular/material';
 
 import { TripRoutingModule } from './trip-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { TripLogModule } from '../trip-log/trip-log.module';
 
 import { ListComponent } from './containers/list/list.component';
 import { DetailComponent } from './containers/detail/detail.component';
@@ -32,9 +33,9 @@ import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.
     MatInputModule,
     MatProgressSpinnerModule,
     MatTableModule,
-    MatCardModule,
     ReactiveFormsModule,
     SharedModule,
+    TripLogModule,
     MatDialogModule,
     MatPaginatorModule,
     MatDatepickerModule,

@@ -5,7 +5,6 @@ import { takeUntil } from 'rxjs/operators';
 
 import { Trip } from '../../../core/models/trip.model';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
-import { LocationService } from '../../../core/services/location.service';
 import { DateService } from '../../../core/services/date.service';
 
 @Component({
@@ -16,13 +15,12 @@ import { DateService } from '../../../core/services/date.service';
 })
 export class TripDetailComponent implements OnInit, OnDestroy {
   @Input() trip: Trip;
-  @Output() clickEdit = new EventEmitter<Trip>();
-  @Output() clickDelete = new EventEmitter<Trip>();
+  @Output() editItem = new EventEmitter<Trip>();
+  @Output() deleteItem = new EventEmitter<Trip>();
   private ngUnsubscribe = new Subject<boolean>();
 
   constructor(
     private dialog: MatDialog,
-    public locationService: LocationService,
     public dateService: DateService
   ) {
   }
@@ -36,7 +34,7 @@ export class TripDetailComponent implements OnInit, OnDestroy {
   }
 
   onClickEdit(): void {
-    this.clickEdit.emit(this.trip);
+    this.editItem.emit(this.trip);
   }
 
   onClickDelete(): void {
@@ -47,7 +45,7 @@ export class TripDetailComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(DeleteDialogComponent, dialogConfig);
     dialogRef.afterClosed().pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
       if (data) {
-        this.clickDelete.emit(this.trip);
+        this.deleteItem.emit(this.trip);
       }
     });    
   }

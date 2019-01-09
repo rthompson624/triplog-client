@@ -1,7 +1,7 @@
 import { Actions, ActionTypes } from './actions';
 import { featureAdapter, initialState, State } from './state';
 
-export function tripReducer(state = initialState, action: Actions): State {
+export function tripLogReducer(state = initialState, action: Actions): State {
   switch (action.type) {
     case ActionTypes.LOAD_MANY: {
       return {
@@ -91,10 +91,10 @@ export function tripReducer(state = initialState, action: Actions): State {
         error: action.payload.error
       };
     }
-    case ActionTypes.SELECT_ONE: {
+    case ActionTypes.SELECT: {
       return {
         ...state,
-        selectedTrip: action.payload
+        selected: action.payload
       };
     }
     default: {
