@@ -9,11 +9,15 @@ import {
 import { TripLogListComponent } from './components/trip-log-list/trip-log-list.component';
 import { TripLogDetailComponent } from './components/trip-log-detail/trip-log-detail.component';
 import { TripLogEditorDialogComponent } from './components/trip-log-editor-dialog/trip-log-editor-dialog.component';
+import { TripLogDetailContainerDetailComponent } from './containers/trip-log-detail-container/trip-log-detail-container.component';
+import { TripLogListContainerComponent } from './containers/trip-log-list-container/trip-log-list-container.component';
 
 const components = [
   TripLogListComponent,
   TripLogDetailComponent,
-  TripLogEditorDialogComponent
+  TripLogEditorDialogComponent,
+  TripLogDetailContainerDetailComponent,
+  TripLogListContainerComponent
 ];
 
 @NgModule({

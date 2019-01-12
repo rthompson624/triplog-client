@@ -9,12 +9,12 @@ import { RootStoreState, TripStoreActions, TripStoreSelectors } from '../../../r
 import { Page } from '../../../core/models/page.model';
 
 @Component({
-  selector: 'app-list',
+  selector: 'app-trip-list-container',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  templateUrl: './trip-list-container.component.html',
+  styleUrls: ['./trip-list-container.component.css']
 })
-export class ListComponent implements OnInit {
+export class TripListContainerComponent implements OnInit {
   columns: string[] = ['name', 'startDate'];
   trips$: Observable<Trip[]>;
   page$: Observable<Page>;

@@ -11,10 +11,10 @@ import { TripRoutingModule } from './trip-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { TripLogModule } from '../trip-log/trip-log.module';
 
-import { ListComponent } from './containers/list/list.component';
-import { DetailComponent } from './containers/detail/detail.component';
-import { CreateComponent } from './containers/create/create.component';
-import { EditComponent } from './containers/edit/edit.component';
+import { TripListContainerComponent } from './containers/trip-list-container/trip-list-container.component';
+import { TripDetailContainerComponent } from './containers/trip-detail-container/trip-detail-container.component';
+import { TripCreateContainerComponent } from './containers/trip-create-container/trip-create-container.component';
+import { TripEditContainerComponent } from './containers/trip-edit-container/trip-edit-container.component';
 import { TripListComponent } from './components/trip-list/trip-list.component';
 import { TripDetailComponent } from './components/trip-detail/trip-detail.component';
 import { TripEditorComponent } from './components/trip-editor/trip-editor.component';
@@ -42,13 +42,13 @@ import { TripDeleteDialogComponent } from './components/trip-delete-dialog/trip-
     MatSelectModule
   ],
   declarations: [
-    ListComponent,
+    TripListContainerComponent,
     TripListComponent,
     TripDetailComponent,
-    DetailComponent,
+    TripDetailContainerComponent,
     TripEditorComponent,
-    CreateComponent,
-    EditComponent,
+    TripCreateContainerComponent,
+    TripEditContainerComponent,
     TripDeleteDialogComponent
   ]
 })

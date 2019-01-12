@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { TripLog } from '../../../core/models/trip-log.model';
-import { DateService } from '../../../core/services/date.service';
 
 @Component({
   selector: 'app-trip-log-list',
@@ -12,7 +11,6 @@ export class TripLogListComponent implements OnInit {
   @Input() logs: TripLog[];
 
   constructor(
-    private dateService: DateService
   ) {
   }
 

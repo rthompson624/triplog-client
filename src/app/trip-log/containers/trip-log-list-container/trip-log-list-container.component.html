@@ -1,9 +1,9 @@
 <div style="padding: 10px 0px 10px 0px">
   <i class="material-icons" (click)="onCreate()">add</i>
 </div>
-<div *ngFor="let log of logs">
+<div *ngFor="let log of (logs$ | async)">
   <app-trip-log-detail-container [log]="log"></app-trip-log-detail-container>
 </div>
-<div *ngIf="logs.length">
+<div *ngIf="(logs$ | async).length">
   <i class="material-icons" (click)="onCreate()">add</i>
 </div>

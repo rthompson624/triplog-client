@@ -6,10 +6,10 @@ import * as moment from 'moment';
 export const featureAdapter: EntityAdapter<TripLog> = createEntityAdapter<TripLog>({
   selectId: model => model.id,
   sortComparer: (log1: TripLog, log2: TripLog): number => {
-    // Chronological order
+    // Reverse chronological order
     const log1Start = moment(log1.logDate);
     const log2Start = moment(log2.logDate);
-    return log1Start.diff(log2Start);
+    return log2Start.diff(log1Start);
   }
 });
 

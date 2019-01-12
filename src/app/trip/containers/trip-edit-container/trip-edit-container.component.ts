@@ -8,12 +8,12 @@ import { Trip } from '../../../core/models/trip.model';
 import { RootStoreState, TripStoreActions, TripStoreSelectors } from '../../../root-store';
 
 @Component({
-  selector: 'app-edit',
+  selector: 'app-trip-edit-container',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css']
+  templateUrl: './trip-edit-container.component.html',
+  styleUrls: ['./trip-edit-container.component.css']
 })
-export class EditComponent implements OnInit {
+export class TripEditContainerComponent implements OnInit {
   trip$: Observable<Trip>;
 
   constructor(

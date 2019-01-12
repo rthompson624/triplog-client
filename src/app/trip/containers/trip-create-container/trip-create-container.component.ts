@@ -5,12 +5,12 @@ import { Trip } from '../../../core/models/trip.model';
 import { RootStoreState, TripStoreActions } from '../../../root-store';
 
 @Component({
-  selector: 'app-create',
+  selector: 'app-trip-create-container',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.css']
+  templateUrl: './trip-create-container.component.html',
+  styleUrls: ['./trip-create-container.component.css']
 })
-export class CreateComponent implements OnInit {
+export class TripCreateContainerComponent implements OnInit {
   trip: Trip = {
     name: null,
     creatorId: null

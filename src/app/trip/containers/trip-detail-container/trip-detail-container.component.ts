@@ -5,18 +5,16 @@ import { switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { Trip } from '../../../core/models/trip.model';
-import { TripLog } from '../../../core/models/trip-log.model';
-import { RootStoreState, TripStoreActions, TripStoreSelectors, TripLogStoreActions, TripLogStoreSelectors } from '../../../root-store';
+import { RootStoreState, TripStoreActions, TripStoreSelectors } from '../../../root-store';
 
 @Component({
-  selector: 'app-detail',
+  selector: 'app-trip-detail-container',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.css']
+  templateUrl: './trip-detail-container.component.html',
+  styleUrls: ['./trip-detail-container.component.css']
 })
-export class DetailComponent implements OnInit {
+export class TripDetailContainerComponent implements OnInit {
   trip$: Observable<Trip>;
-  logs$: Observable<TripLog[]>;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,8 +27,6 @@ export class DetailComponent implements OnInit {
     this.trip$ = this.route.paramMap.pipe(
       switchMap(paramMap => {
         this.store$.dispatch(new TripStoreActions.LoadOneAction({ id: parseInt(paramMap.get('id'))}));
-        this.store$.dispatch(new TripLogStoreActions.LoadManyAction({ pageIndex: null, tripId: parseInt(paramMap.get('id')) }));
-        this.logs$ = this.store$.select(TripLogStoreSelectors.selectAllTripLogItems);
         return this.store$.select(TripStoreSelectors.selectTripById(parseInt(paramMap.get('id'))));
       })
     );
