@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { Trip } from '../../../core/models/trip.model';
-import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
+import { TripDeleteDialogComponent } from '../trip-delete-dialog/trip-delete-dialog.component';
 import { DateService } from '../../../core/services/date.service';
 
 @Component({
@@ -42,7 +42,7 @@ export class TripDetailComponent implements OnInit, OnDestroy {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = this.trip;
-    const dialogRef = this.dialog.open(DeleteDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(TripDeleteDialogComponent, dialogConfig);
     dialogRef.afterClosed().pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
       if (data) {
         this.deleteItem.emit(this.trip);

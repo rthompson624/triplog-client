@@ -9,8 +9,8 @@
     <p>{{ log.description }}</p>
   </mat-card-content>
   <mat-card-actions>
-    <i class="material-icons" style="padding-left: 5px">edit</i>
-    <i class="material-icons" style="padding-left: 15px">delete</i>
+    <i (click)="onEdit()" class="material-icons" style="padding-left: 5px">edit</i>
+    <i (click)="onDelete()" class="material-icons" style="padding-left: 15px">delete</i>
   </mat-card-actions>
 </mat-card>
 <br />

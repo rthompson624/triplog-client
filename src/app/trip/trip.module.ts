@@ -18,11 +18,11 @@ import { EditComponent } from './containers/edit/edit.component';
 import { TripListComponent } from './components/trip-list/trip-list.component';
 import { TripDetailComponent } from './components/trip-detail/trip-detail.component';
 import { TripEditorComponent } from './components/trip-editor/trip-editor.component';
-import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
+import { TripDeleteDialogComponent } from './components/trip-delete-dialog/trip-delete-dialog.component';
 
 @NgModule({
   entryComponents: [
-    DeleteDialogComponent
+    TripDeleteDialogComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +49,7 @@ import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.
     TripEditorComponent,
     CreateComponent,
     EditComponent,
-    DeleteDialogComponent
+    TripDeleteDialogComponent
   ]
 })
 export class TripModule {

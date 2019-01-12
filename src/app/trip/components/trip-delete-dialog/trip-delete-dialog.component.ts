@@ -3,16 +3,16 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Trip } from '../../../core/models/trip.model';
 
 @Component({
-  selector: 'app-delete-dialog',
+  selector: 'app-trip-delete-dialog',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './delete-dialog.component.html',
-  styleUrls: ['./delete-dialog.component.css']
+  templateUrl: './trip-delete-dialog.component.html',
+  styleUrls: ['./trip-delete-dialog.component.css']
 })
-export class DeleteDialogComponent implements OnInit {
+export class TripDeleteDialogComponent implements OnInit {
   trip: Trip;
 
   constructor(
-    private dialogRef: MatDialogRef<DeleteDialogComponent>,
+    private dialogRef: MatDialogRef<TripDeleteDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data
   ) {
     this.trip = data;

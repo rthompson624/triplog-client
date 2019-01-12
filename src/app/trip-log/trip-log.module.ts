@@ -8,14 +8,17 @@ import {
 
 import { TripLogListComponent } from './components/trip-log-list/trip-log-list.component';
 import { TripLogDetailComponent } from './components/trip-log-detail/trip-log-detail.component';
+import { TripLogEditorDialogComponent } from './components/trip-log-editor-dialog/trip-log-editor-dialog.component';
 
 const components = [
   TripLogListComponent,
-  TripLogDetailComponent
+  TripLogDetailComponent,
+  TripLogEditorDialogComponent
 ];
 
 @NgModule({
   entryComponents: [
+    TripLogEditorDialogComponent
   ],
   imports: [
     CommonModule,

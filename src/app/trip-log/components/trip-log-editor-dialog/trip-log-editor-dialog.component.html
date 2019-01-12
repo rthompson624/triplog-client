@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>{{ editMode }} Log</h2>
+<mat-dialog-content [formGroup]="logForm">
+  <mat-form-field class="app-ctrl-full-width">
+    <textarea matInput placeholder="Description" formControlName="description" width="100%" rows="4"></textarea>
+  </mat-form-field>
+  <br />
+  <mat-form-field>
+    <input matInput [matDatepicker]="logDate" placeholder="Date" formControlName="logDate">
+    <mat-datepicker-toggle matSuffix [for]="logDate"></mat-datepicker-toggle>
+    <mat-datepicker #logDate></mat-datepicker>
+  </mat-form-field>
+  <br />
+  <mat-form-field class="app-ctrl-full-width">
+    <input matInput placeholder="File" formControlName="imageUrl" width="100%">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="mat-raised-button" (click)="cancel()">Cancel</button>
+  <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
+</mat-dialog-actions>

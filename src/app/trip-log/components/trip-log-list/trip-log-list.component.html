@@ -4,6 +4,6 @@
 <div *ngFor="let log of logs">
   <app-trip-log-detail [log]="log"></app-trip-log-detail>
 </div>
-<div>
+<div *ngIf="logs.length">
   <i class="material-icons" (click)="onCreate()">add</i>
 </div>
