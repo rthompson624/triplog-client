@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { TripLog } from '../../../core/models/trip-log.model';
 import { TripLogEditorDialogComponent } from '../trip-log-editor-dialog/trip-log-editor-dialog.component';
+import { TripLogDeleteDialogComponent } from '../trip-log-delete-dialog/trip-log-delete-dialog.component';
 import { User } from '../../../core/models/user.model';
 import { DateService } from '../../../core/services/date.service';
 import { MediaService } from '../../../core/services/media.service';
@@ -52,6 +53,17 @@ export class TripLogDetailComponent implements OnInit, OnDestroy {
   }
 
   onDelete(): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = '350px';
+    dialogConfig.data = this.log;
+    const dialogRef = this.dialog.open(TripLogDeleteDialogComponent, dialogConfig);
+    dialogRef.afterClosed().pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
+      if (data) {
+        this.deleteItem.emit(<TripLog>data);
+      }
+    });    
   }
 
 }

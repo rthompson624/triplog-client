@@ -30,6 +30,7 @@ export class TripLogDetailContainerDetailComponent implements OnInit {
   }
 
   deleteLog(log: TripLog): void {
+    this.store$.dispatch(new TripLogStoreActions.DeleteAction(log));
   }
 
 }

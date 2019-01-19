@@ -30,4 +30,8 @@ export class DateService {
     }
   }
 
+  currentDateTimeAsString(): string {
+    return moment().toISOString();
+  }
+
 }

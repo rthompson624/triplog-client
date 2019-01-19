@@ -11,18 +11,21 @@ import { TripLogDetailComponent } from './components/trip-log-detail/trip-log-de
 import { TripLogEditorDialogComponent } from './components/trip-log-editor-dialog/trip-log-editor-dialog.component';
 import { TripLogDetailContainerDetailComponent } from './containers/trip-log-detail-container/trip-log-detail-container.component';
 import { TripLogListContainerComponent } from './containers/trip-log-list-container/trip-log-list-container.component';
+import { TripLogDeleteDialogComponent } from './components/trip-log-delete-dialog/trip-log-delete-dialog.component';
 
 const components = [
   TripLogListComponent,
   TripLogDetailComponent,
   TripLogEditorDialogComponent,
   TripLogDetailContainerDetailComponent,
-  TripLogListContainerComponent
+  TripLogListContainerComponent,
+  TripLogDeleteDialogComponent
 ];
 
 @NgModule({
   entryComponents: [
-    TripLogEditorDialogComponent
+    TripLogEditorDialogComponent,
+    TripLogDeleteDialogComponent
   ],
   imports: [
     CommonModule,

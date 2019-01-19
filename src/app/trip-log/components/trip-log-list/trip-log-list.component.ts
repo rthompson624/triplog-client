@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+
 import { TripLog } from '../../../core/models/trip-log.model';
 
 @Component({
@@ -15,9 +16,6 @@ export class TripLogListComponent implements OnInit {
   }
 
   ngOnInit() {
-  }
-
-  onCreate() {
   }
 
 }
