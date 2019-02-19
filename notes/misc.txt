@@ -1,0 +1,16 @@
+user
+id: 2
+email: user2@road.com
+password: password
+
+trip
+id: 9
+name: Going to Boulder
+
+triplog
+1, Skiing, 1550423000287.jpg
+2, Broncos, 1550423056824.jpg
+7, Snow, 1550423086282.jpg
+8, Yo, 1550423000287.jpg
+
+https://trip-log.s3.us-east-2.amazonaws.com/2/1550423086282.jpg

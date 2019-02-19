@@ -10,11 +10,20 @@
     <mat-datepicker #logDate></mat-datepicker>
   </mat-form-field>
   <br />
-  <mat-form-field class="app-ctrl-full-width">
-    <input matInput placeholder="File" formControlName="imageUrl" width="100%">
-  </mat-form-field>
+  <a *ngIf="imgUrl && !isUploading" (click)="selectFile()">
+    <img [src]="imgUrl" style="margin: 5px 2px 5px 2px; width: 98%">
+  </a>
+  <a *ngIf="!imgUrl && !isUploading" (click)="selectFile()">
+    <div>
+      <mat-icon>add_photo_alternate</mat-icon><span style="display: inline-block; vertical-align: top; margin: 10px 0 0 15px">Upload Photo</span>
+    </div>
+  </a>
+  <input type="file" #fileControl style="display: none" (change)="onFileSelected()" />
+  <div *ngIf="isUploading" style="display: flex; justify-content: center; margin: 30px 0 30px 0">
+    <mat-spinner></mat-spinner>
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button class="mat-raised-button" (click)="cancel()">Cancel</button>
-  <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
+  <button class="mat-raised-button mat-primary" (click)="save()" [disabled]="!logForm.valid">Save</button>
 </mat-dialog-actions>

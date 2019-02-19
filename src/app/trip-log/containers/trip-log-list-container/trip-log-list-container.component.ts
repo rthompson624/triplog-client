@@ -48,6 +48,7 @@ export class TripLogListContainerComponent implements OnInit, OnDestroy {
     let log: TripLog = {};
     log.logDate = this.dateService.currentDateTimeAsString();
     log.tripId = this.trip.id;
+    log.userId = this.trip.creatorId;
     dialogConfig.data = log;
     const dialogRef = this.dialog.open(TripLogEditorDialogComponent, dialogConfig);
     dialogRef.afterClosed().pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {

@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  restApiDomain: 'TODO:'
+  restApiDomain: 'TODO:',
+  imageUploadDomain: ''
 };

@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, 
-  MatCardModule, MatDialogModule, MatDatepickerModule, MatSelectModule
+  MatCardModule, MatDialogModule, MatDatepickerModule, MatSelectModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 import { TripLogListComponent } from './components/trip-log-list/trip-log-list.component';
@@ -37,7 +38,8 @@ const components = [
     ReactiveFormsModule,
     MatDialogModule,
     MatDatepickerModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressSpinnerModule
   ],
   declarations: [...components],
   exports: [...components]

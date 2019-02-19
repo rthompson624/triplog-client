@@ -1,5 +1,6 @@
 export const AppConfiguration = {
   apiPageSize: 10,
-  avatarPath: '/assets/avatar/',
-  tripLogImagePath: '/assets/triplog/'
+  imageDomain: 'trip-log.s3.us-east-2.amazonaws.com',
+  imageUploadEndpoint: 'image-upload',
+  imageUrlPrefix: 'users'
 };

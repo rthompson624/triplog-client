@@ -14,12 +14,8 @@ export class MediaService {
   ) {
   }
 
-  getAvatarUrl(imageFileName: string): SafeUrl {
-    return this.sanitizer.bypassSecurityTrustUrl(AppConfiguration.avatarPath + imageFileName);
-  }
-
-  getTripLogImageUrl(imageFileName: string): SafeUrl {
-    return this.sanitizer.bypassSecurityTrustUrl(AppConfiguration.tripLogImagePath + imageFileName);
+  getImageUrl(userId: number, imageFileName: string): SafeUrl {
+    return this.sanitizer.bypassSecurityTrustUrl('https://' + AppConfiguration.imageDomain + '/' + AppConfiguration.imageUrlPrefix + '/' + userId + '/' + imageFileName);
   }
 
 }

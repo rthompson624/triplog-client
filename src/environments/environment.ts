@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  restApiDomain: 'localhost:3030'
+  restApiDomain: 'localhost:3030',
+  imageUploadDomain: 'localhost:4300'
 };
 
 /*
