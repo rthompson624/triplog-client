@@ -30,6 +30,7 @@ export class SecurityInterceptor implements HttpInterceptor {
     let retVal = true;
     if (url.toLowerCase().includes('users') && method.toLowerCase().includes('post')) retVal = false;
     if (url.toLowerCase().includes('authentication')) retVal = false;
+    if (url.toLowerCase().includes('config-variables')) retVal = false;
     return retVal;
   }
 

@@ -4,9 +4,6 @@
 
 export const environment = {
   production: false,
-  envAbbreviation: 'dev',
-  restApiDomain: 'localhost:3030',
-  imageUploadDomain: 'localhost:4300'
 };
 
 /*

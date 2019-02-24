@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 import { CoreModule } from '../core.module';
-import { AppConfiguration } from '../../../configuration/configuration';
+import { ConfigService } from '../services/config.service';
+
+const IMAGE_SERVER: string = 'https://trip-log.s3.us-east-2.amazonaws.com';
+const IMAGE_PROFILE_BLANK: string = 'profile-blank.png';
+const IMAGE_BLANK: string = 'image-blank.png';
 
 @Injectable({
   providedIn: CoreModule
@@ -10,23 +16,28 @@ import { AppConfiguration } from '../../../configuration/configuration';
 export class MediaService {
 
   constructor(
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private configService: ConfigService
   ) {
   }
 
-  getImageUrl(userId: number, imageFileName: string, type?: string): SafeUrl {
+  getImageUrl(userId: number, imageFileName: string, type?: string): Observable<SafeUrl> {
     if (!imageFileName) {
       let file: string;
       switch(type) {
         case 'profile':
-          file = AppConfiguration.imageProfileBlank;
+          file = IMAGE_PROFILE_BLANK;
           break;
         default:
-          file = AppConfiguration.imageBlank;
+          file = IMAGE_BLANK;
       }
-      return this.sanitizer.bypassSecurityTrustUrl('/assets/graphics/' + file);
+      return of(this.sanitizer.bypassSecurityTrustUrl('/assets/graphics/' + file));
     } else {
-      return this.sanitizer.bypassSecurityTrustUrl('https://' + AppConfiguration.imageDomain + '/' + AppConfiguration.imageUrlPrefix + '/' + userId + '/' + imageFileName);
+      return this.configService.getConfig().pipe(
+        switchMap(config => {
+          return of(this.sanitizer.bypassSecurityTrustUrl(IMAGE_SERVER + '/' + config.environment + '/' + 'users' + '/' + userId + '/' + imageFileName));
+        })
+      );
     }
   }
 

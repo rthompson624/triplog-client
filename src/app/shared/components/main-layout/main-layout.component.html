@@ -2,12 +2,12 @@
 <div class="sticky-toolbar">
   <!-- Header -->
   <div class="header">
-    <h2><a routerLink="/" routerLinkActive="active" class="site-title">Trip Log</a></h2>
+    <h2><a routerLink="/" routerLinkActive="active" class="site-title">Yo trip it</a></h2>
   </div>
   <!-- Navigation Bar -->
   <div class="navbar">
     <div class="navbar-left">
-      <a *ngIf="accessToken$ | async" routerLink="/trips"><mat-icon>home</mat-icon></a>
+      <a *ngIf="accessToken$ | async" routerLink="/trips"><mat-icon>flight_takeoff</mat-icon></a>
     </div>
     <div class="navbar-right">
       <a *ngIf="accessToken$ | async" routerLink="/users"><mat-icon>person</mat-icon></a>

@@ -3,8 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { CoreModule } from '../core.module';
-import { environment } from '../../../environments/environment';
-import { AppConfiguration } from '../../../configuration/configuration';
 import { FileUploadResponse } from '../models/file-upload-response';
 
 @Injectable({
@@ -21,11 +19,7 @@ export class FileUploadService {
   }
 
   private getUrl(userId: number): string {
-    if (environment.imageUploadDomain) {
-      return 'http://' + environment.imageUploadDomain + '/' + AppConfiguration.imageUploadEndpoint + '/' + userId;
-    } else {
-      return '/' + AppConfiguration.imageUploadEndpoint + '/' + userId;
-    }
+    return '/' + 'image-upload' + '/' + userId;
   }
 
 }

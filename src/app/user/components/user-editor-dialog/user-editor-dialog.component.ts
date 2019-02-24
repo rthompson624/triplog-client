@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SafeUrl } from '@angular/platform-browser';
 import { take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { FileUploadService } from '../../../core/services/file-upload.service';
 import { MediaService } from '../../../core/services/media.service'
@@ -19,7 +20,7 @@ export class UserEditorDialogComponent implements OnInit {
   userForm: FormGroup;
   @ViewChild('fileControl') fileControl: ElementRef;
   isUploading: boolean = false;
-  imgUrl: SafeUrl;
+  imgUrl: Observable<SafeUrl>;
 
   constructor(
     private dialogRef: MatDialogRef<UserEditorDialogComponent>,

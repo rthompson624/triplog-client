@@ -166,9 +166,10 @@ export class AuthenticationStoreEffects {
     ),
     concatMap(action =>
       this.userService.update(action.payload).pipe(
-        map(response =>
-          new featureActions.UpdateUserSuccessAction(response)
-        ),
+        map(response => {
+          this.authService.updateUserInLocalStorage(response);
+          return new featureActions.UpdateUserSuccessAction(response);
+        }),
         catchError(error =>
           observableOf(new featureActions.UpdateUserFailureAction({ error: this.formatError(error) }))
         )

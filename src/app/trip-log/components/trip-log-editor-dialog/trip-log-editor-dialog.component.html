@@ -10,10 +10,10 @@
     <mat-datepicker #logDate></mat-datepicker>
   </mat-form-field>
   <br />
-  <a *ngIf="imgUrl && !isUploading" (click)="selectFile()">
-    <img [src]="imgUrl" style="margin: 5px 2px 5px 2px; width: 98%">
+  <a *ngIf="(imgUrl | async) && !isUploading" (click)="selectFile()">
+    <img [src]="imgUrl | async" style="margin: 5px 2px 5px 2px; width: 98%">
   </a>
-  <a *ngIf="!imgUrl && !isUploading" (click)="selectFile()">
+  <a *ngIf="!(imgUrl | async) && !isUploading" (click)="selectFile()">
     <div>
       <mat-icon>add_photo_alternate</mat-icon><span style="display: inline-block; vertical-align: top; margin: 10px 0 0 15px">Upload Photo</span>
     </div>

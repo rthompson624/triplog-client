@@ -1,33 +1,38 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, switchMap } from 'rxjs/operators';
 
 import { CoreModule } from '../core.module';
 import { AuthRequest } from '../models/auth-request.model';
 import { AuthResponse } from '../models/auth-response.model';
-import { environment } from '../../../environments/environment';
 import { User } from '../models/user.model';
+import { ConfigService } from '../services/config.service';
 
 @Injectable({
   providedIn: CoreModule
 })
 export class AuthenticationService {
-  private authUrl: string = 'http://' + environment.restApiDomain + '/authentication';
+  private apiEndpoint: string = 'authentication';
 
-  constructor(private httpClient: HttpClient) {
+  constructor(
+    private httpClient: HttpClient,
+    private configService: ConfigService
+  ) {
   }
 
   authenticateUser(authReq: AuthRequest): Observable<AuthResponse> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {headers: headers};
-    return this.httpClient.post<AuthResponse>(this.authUrl, authReq, options).pipe(
-      tap((authRes: AuthResponse) => {
-        // Authentication succeeded
-        this.saveInLocalStorage('accessToken', authRes.accessToken);
-        this.saveInLocalStorage('user', JSON.stringify(authRes.user));
-      })
-    );
+    return this.configService.getConfig().pipe(switchMap(config => {
+      return this.httpClient.post<AuthResponse>(config.apiServer + '/' + this.apiEndpoint, authReq, options).pipe(
+        tap((authRes: AuthResponse) => {
+          // Authentication succeeded
+          this.saveInLocalStorage('accessToken', authRes.accessToken);
+          this.saveInLocalStorage('user', JSON.stringify(authRes.user));
+        })
+      );
+    }));
   }
 
   userIsAuthenticated(): boolean {
@@ -48,6 +53,12 @@ export class AuthenticationService {
 
   logoutUser(): void {
     this.deleteInLocalStorage('accessToken');
+    this.deleteInLocalStorage('user');
+  }
+
+  updateUserInLocalStorage(user: User): void {
+    this.deleteInLocalStorage('user');
+    this.saveInLocalStorage('user', JSON.stringify(user));
   }
 
   private saveInLocalStorage(key: string, value: string): void {
