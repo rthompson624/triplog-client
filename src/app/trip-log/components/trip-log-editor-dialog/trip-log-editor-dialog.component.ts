@@ -22,6 +22,7 @@ export class TripLogEditorDialogComponent implements OnInit {
   @ViewChild('fileControl') fileControl: ElementRef;
   isUploading: boolean = false;
   imgUrl: Observable<SafeUrl>;
+  uploadError: string;
 
   constructor(
     private dialogRef: MatDialogRef<TripLogEditorDialogComponent>,
@@ -58,6 +59,7 @@ export class TripLogEditorDialogComponent implements OnInit {
 
   onFileSelected(): void {
     this.isUploading = true;
+    this.uploadError = null;
     const files: FileList = this.fileControl.nativeElement.files;
     if (files.length > 0) {
       const file = files[0];
@@ -65,6 +67,10 @@ export class TripLogEditorDialogComponent implements OnInit {
         this.log.imageUrl = response.file;
         this.imgUrl = this.mediaService.getImageUrl(this.log.userId, this.log.imageUrl);
         this.isUploading = false;
+        this.changeDetectorRef.detectChanges();
+      }, error => {
+        this.isUploading = false;
+        this.uploadError = this.formatError(error);
         this.changeDetectorRef.detectChanges();
       });
     }
@@ -75,6 +81,14 @@ export class TripLogEditorDialogComponent implements OnInit {
       description: [this.log.description, [Validators.required]],
       logDate: [this.log.logDate, [Validators.required]]
     });
+  }
+
+  private formatError(error: any): string {
+    if (error.error && error.error.message) {
+      return error.error.message;
+    }
+    if (error.error) return error.error.toString();
+    if (error) return error.toString();
   }
 
 }

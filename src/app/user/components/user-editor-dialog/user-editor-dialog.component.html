@@ -20,6 +20,10 @@
   <div *ngIf="isUploading" style="display: flex; justify-content: center; margin: 30px 0 30px 0">
     <mat-spinner></mat-spinner>
   </div>
+  <div *ngIf="uploadError">
+    <p style="color: red">Woops. There was an error attempting to upload your pic...</p>
+    <p style="color: red; font-style: italic">{{ uploadError }}</p>
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button class="mat-raised-button" (click)="cancel()">Cancel</button>
