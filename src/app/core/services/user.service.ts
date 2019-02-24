@@ -27,4 +27,11 @@ export class UserService {
     return this.httpClient.get<User>(this.userUrl + '/' + id, options);
   }
 
+  update(user: User): Observable<User> {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json');
+    const options = {headers: headers};
+    return this.httpClient.patch<User>(this.userUrl + '/' + user.id, user, options);
+  }
+
 }

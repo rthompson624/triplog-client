@@ -18,6 +18,10 @@ const routes: Routes = [
     loadChildren: './trip/trip.module#TripModule'
   },
   {
+    path: 'users',
+    loadChildren: './user/user.module#UserModule'
+  },
+  {
     path: '**',
     component: NotFoundComponent
   }

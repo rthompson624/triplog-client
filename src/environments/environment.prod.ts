@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
-  restApiDomain: 'TODO:',
+  envAbbreviation: 'prod',
+  restApiDomain: 'localhost:3030',
   imageUploadDomain: ''
 };

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MatProgressBarModule, MatChipsModule } from '@angular/material';
+import { MatProgressBarModule, MatChipsModule, MatIconModule } from '@angular/material';
 
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -16,7 +16,8 @@ const components = [
     CommonModule,
     RouterModule,
     MatProgressBarModule,
-    MatChipsModule
+    MatChipsModule,
+    MatIconModule
   ],
   declarations: [...components],
   exports: [...components]

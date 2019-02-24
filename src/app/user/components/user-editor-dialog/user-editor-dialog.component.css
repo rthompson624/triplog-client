@@ -1,0 +1,16 @@
+.app-ctrl-full-width {
+  width: 100%;
+}
+
+a {
+  color: cornflowerblue;
+}
+
+a:hover {
+  cursor: pointer;
+  color: #3f51b5;
+}
+
+mat-icon {
+  font-size: 36px;
+}

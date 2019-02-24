@@ -17,7 +17,10 @@ export enum ActionTypes {
   TOKEN_VALIDATION_SUCCESS = '[authentication] Token validation (success)',
   TOKEN_VALIDATION_FAILURE = '[authentication] Token validation (failure)',
   FAILURE = '[authentication] Failure',
-  ROUTE_NAVIGATION = '[authentication] Route navigation'
+  ROUTE_NAVIGATION = '[authentication] Route navigation',
+  UPDATE_USER_REQUEST = '[authentication] Update user',
+  UPDATE_USER_FAILURE = '[authentication] Update user (failure)',
+  UPDATE_USER_SUCCESS = '[authentication] Update user (success)'
 }
 
 export class CreateAccountRequestAction implements Action {
@@ -94,6 +97,21 @@ export class FailureAction implements Action {
   constructor(public payload: { error: string }) {}
 }
 
+export class UpdateUserRequestAction implements Action {
+  readonly type = ActionTypes.UPDATE_USER_REQUEST;
+  constructor(public payload: User) {}
+}
+
+export class UpdateUserFailureAction implements Action {
+  readonly type = ActionTypes.UPDATE_USER_FAILURE;
+  constructor(public payload: { error: string }) {}
+}
+
+export class UpdateUserSuccessAction implements Action {
+  readonly type = ActionTypes.UPDATE_USER_SUCCESS;
+  constructor(public payload: User) {}
+}
+
 export type Actions = 
   CreateAccountRequestAction |
   CreateAccountFailureAction |
@@ -109,5 +127,8 @@ export type Actions =
   TokenValidationSuccessAction |
   TokenValidationFailureAction |
   RouteNavigationAction |
-  FailureAction
+  FailureAction |
+  UpdateUserRequestAction |
+  UpdateUserFailureAction |
+  UpdateUserSuccessAction
 ;

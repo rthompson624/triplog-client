@@ -80,20 +80,11 @@ export class AuthenticationStoreEffects {
       featureActions.ActionTypes.LOGOUT_REQUEST
     ),
     switchMap(() => {
-      return observableOf(this.authService.logoutUser()).pipe(
-        map(() => new featureActions.LogoutSuccessAction())
-	    );
-    })
-  );
-
-  @Effect()
-  logoutSuccessEffect$: Observable<Action> = this.actions$.pipe(
-    ofType<featureActions.LogoutSuccessAction>(
-      featureActions.ActionTypes.LOGOUT_SUCCESS
-    ),
-    switchMap(() => {
       return this.router.navigate(['/', 'authentication', 'login'])
-      .then(() => new featureActions.RouteNavigationAction())
+      .then(() => {
+        this.authService.logoutUser();
+        return new featureActions.LogoutSuccessAction();
+      })
       .catch(error => new featureActions.FailureAction({ error: this.formatError(error) }));
     })
   );
@@ -166,6 +157,23 @@ export class AuthenticationStoreEffects {
       .then(() => new featureActions.RouteNavigationAction())
       .catch(error => new featureActions.FailureAction({ error: this.formatError(error) }));
     })
+  );
+
+  @Effect()
+  updateUserEffect$: Observable<Action> = this.actions$.pipe(
+    ofType<featureActions.UpdateUserRequestAction>(
+      featureActions.ActionTypes.UPDATE_USER_REQUEST
+    ),
+    concatMap(action =>
+      this.userService.update(action.payload).pipe(
+        map(response =>
+          new featureActions.UpdateUserSuccessAction(response)
+        ),
+        catchError(error =>
+          observableOf(new featureActions.UpdateUserFailureAction({ error: this.formatError(error) }))
+        )
+      )
+    )
   );
 
   private formatError(error: any): string {

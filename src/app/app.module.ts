@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { IndexComponent } from './index/index.component';
-import { RootStoreModule } from './root-store'
+import { RootStoreModule } from './root-store';
 
 @NgModule({
   declarations: [

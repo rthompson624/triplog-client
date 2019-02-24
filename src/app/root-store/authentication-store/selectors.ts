@@ -4,7 +4,7 @@ import { State } from './state';
 
 const getError = (state: State): string => state.error;
 const getIsLoading = (state: State): boolean => state.isLoading;
-const getUser = (state: State): User => state.user;
+const getUser = (state: State): User => <User>JSON.parse(JSON.stringify(state.user));
 const getAccessToken = (state: State): string => state.accessToken;
 
 // Parameter (case-sensitive) in createFeatureSelector() must match parameter in StoreModule.forFeature() call in xxxxx-store.module.ts

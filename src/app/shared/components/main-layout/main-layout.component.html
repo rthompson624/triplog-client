@@ -7,11 +7,12 @@
   <!-- Navigation Bar -->
   <div class="navbar">
     <div class="navbar-left">
-      <a *ngIf="accessToken$ | async" routerLink="/trips" routerLinkActive="active">Trips</a>
+      <a *ngIf="accessToken$ | async" routerLink="/trips"><mat-icon>home</mat-icon></a>
     </div>
     <div class="navbar-right">
-      <a *ngIf="!(accessToken$ | async)" routerLink="/authentication/login" routerLinkActive="active">Login</a>
-      <a *ngIf="accessToken$ | async" (click)="onLogout()">Logout</a>
+      <a *ngIf="accessToken$ | async" routerLink="/users"><mat-icon>person</mat-icon></a>
+      <a *ngIf="!(accessToken$ | async)" routerLink="/authentication/login" routerLinkActive="active"><mat-icon>power_settings_new</mat-icon></a>
+      <a *ngIf="accessToken$ | async" (click)="onLogout()"><mat-icon>power_settings_new</mat-icon></a>
     </div>
   </div>
   <mat-progress-bar *ngIf="isLoading$ | async" mode="indeterminate"></mat-progress-bar>

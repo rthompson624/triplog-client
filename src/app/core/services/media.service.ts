@@ -14,8 +14,20 @@ export class MediaService {
   ) {
   }
 
-  getImageUrl(userId: number, imageFileName: string): SafeUrl {
-    return this.sanitizer.bypassSecurityTrustUrl('https://' + AppConfiguration.imageDomain + '/' + AppConfiguration.imageUrlPrefix + '/' + userId + '/' + imageFileName);
+  getImageUrl(userId: number, imageFileName: string, type?: string): SafeUrl {
+    if (!imageFileName) {
+      let file: string;
+      switch(type) {
+        case 'profile':
+          file = AppConfiguration.imageProfileBlank;
+          break;
+        default:
+          file = AppConfiguration.imageBlank;
+      }
+      return this.sanitizer.bypassSecurityTrustUrl('/assets/graphics/' + file);
+    } else {
+      return this.sanitizer.bypassSecurityTrustUrl('https://' + AppConfiguration.imageDomain + '/' + AppConfiguration.imageUrlPrefix + '/' + userId + '/' + imageFileName);
+    }
   }
 
 }

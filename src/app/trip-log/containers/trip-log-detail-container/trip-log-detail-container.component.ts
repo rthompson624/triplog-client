@@ -12,7 +12,7 @@ import { User } from '../../../core/models/user.model';
   templateUrl: './trip-log-detail-container.component.html',
   styleUrls: ['./trip-log-detail-container.component.css']
 })
-export class TripLogDetailContainerDetailComponent implements OnInit {
+export class TripLogDetailContainerComponent implements OnInit {
   @Input() log: TripLog;
   user$: Observable<User>;
 
