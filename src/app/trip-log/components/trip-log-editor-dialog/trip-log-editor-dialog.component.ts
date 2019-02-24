@@ -87,8 +87,8 @@ export class TripLogEditorDialogComponent implements OnInit {
     if (error.error && error.error.message) {
       return error.error.message;
     }
-    if (error.error) return error.error.toString();
-    if (error) return error.toString();
+    if (error && error.message) return error.message;
+    if (error) return error;
   }
 
 }
