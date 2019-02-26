@@ -61,11 +61,6 @@ a:hover {
   min-height: 100%;
 }
 
-.site-title {
-  color: white;
-  text-decoration-line: none;
-}
-
 .error-message {
   color:#ff4081;
   padding-top: 10px;
