@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable, of as observableOf } from 'rxjs';
-import { catchError, map, switchMap, withLatestFrom, concatMap, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, withLatestFrom, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 import { TripLogService } from '../../core/services/trip-log.service';
@@ -67,7 +67,7 @@ export class TripLogStoreEffects {
     ofType<featureActions.DeleteAction>(
       featureActions.ActionTypes.DELETE
     ),
-    concatMap(action =>
+    switchMap(action =>
       this.dataService.delete(action.payload).pipe(
         map(() =>
           new featureActions.DeleteSuccessAction(action.payload)
@@ -84,7 +84,7 @@ export class TripLogStoreEffects {
     ofType<featureActions.UpdateAction>(
       featureActions.ActionTypes.UPDATE
     ),
-    concatMap(action =>
+    switchMap(action =>
       this.dataService.update(action.payload).pipe(
         map(response =>
           new featureActions.UpdateSuccessAction(response)
@@ -102,7 +102,7 @@ export class TripLogStoreEffects {
       featureActions.ActionTypes.CREATE
     ),
     withLatestFrom(this.store$),
-    concatMap(([action, store])  => {
+    switchMap(([action, store])  => {
       action.payload.userId = store.authentication.user.id;
       return this.dataService.create(action.payload).pipe(
         map(response =>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable, of as observableOf } from 'rxjs';
-import { catchError, map, switchMap, withLatestFrom, concatMap } from 'rxjs/operators';
+import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../../core/services/authentication.service';
@@ -28,7 +28,7 @@ export class AuthenticationStoreEffects {
     ofType<featureActions.CreateAccountRequestAction>(
       featureActions.ActionTypes.CREATE_ACCOUNT_REQUEST
     ),
-    concatMap(action => {
+    switchMap(action => {
       const user: User = {
         email: action.payload.email,
         password: action.payload.password
@@ -164,7 +164,7 @@ export class AuthenticationStoreEffects {
     ofType<featureActions.UpdateUserRequestAction>(
       featureActions.ActionTypes.UPDATE_USER_REQUEST
     ),
-    concatMap(action =>
+    switchMap(action =>
       this.userService.update(action.payload).pipe(
         map(response => {
           this.authService.updateUserInLocalStorage(response);

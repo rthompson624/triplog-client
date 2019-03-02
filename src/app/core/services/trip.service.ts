@@ -13,7 +13,7 @@ import { ConfigService } from '../services/config.service';
 })
 export class TripService {
   private apiEndpoint: string = 'trips';
-  private pageSize: number = 10;
+  private pageSize: number = 8;
 
   constructor(
     private httpClient: HttpClient,
